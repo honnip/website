@@ -13,6 +13,8 @@
 {% for label in post.labels %}
 <meta property="article:tag" content="{{ label.name }}" />
 {% endfor %}
+<link rel="preconnect" href="https://giscus.app">
+<link rel="dns-prefetch" href="https://giscus.app">
 {% endblock %}
 
 {% block header %}
@@ -39,6 +41,14 @@
     </ul>
 </header>
 {{ post.body }}
+<details class="comments">
+    <summary>댓글 표시/숨기기</summary>
+    <script src="https://giscus.app/client.js" data-repo="honnip/website" data-repo-id="R_kgDOM_0RIQ"
+        data-mapping="number" data-term="{{ post.number }}" data-reactions-enabled="1" data-emit-metadata="0"
+        data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="ko" data-loading="lazy"
+        crossorigin="anonymous" referrerpolicy="no-referrer" async>
+        </script>
+</details>
 {% endblock %}
 
 {% block footer %}
