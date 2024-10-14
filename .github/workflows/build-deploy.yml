@@ -5,7 +5,7 @@ on:
     branches:
       - main
   discussion:
-    types: [created, edited, labeled, unlabeled]
+    types: [created, edited, deleted, labeled, unlabeled, category_changed]
 
 jobs:
   build-and-deploy:
