@@ -18,12 +18,12 @@ jobs:
       - name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run:  cargo run --release
+        run: cargo run --release
 
       - name: Purge Unused CSS
         run: |
           npm install -g purgecss
-          purgecss --content './**/*.html' --css 'output/assets/*.css' --output 'output/assets'
+          purgecss --content './output/**/*.html' --css 'output/**/*.css' --output 'output/'
 
       - name: Deploy
         uses: cloudflare/pages-action@v1
