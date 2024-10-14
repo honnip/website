@@ -1,0 +1,15 @@
+[package]
+name = "website"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1"
+fs_extra = "1"
+askama = "0.12"
+octocrab = "0.41"
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+walkdir = "2.5.0"

@@ -1,0 +1,10 @@
+.direnv/
+.devenv/
+.envrc
+flake.nix
+flake.lock
+
+output/
+
+# Added by cargo
+/target

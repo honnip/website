@@ -1,0 +1,11 @@
+{% macro header() %}
+<nav>
+    <a href="/">Honnip.page</a>
+    <a href="/posts">Posts</a>
+    <a href="/about">About</a>
+</nav>
+{% endmacro %}
+
+{% macro footer(name) %}
+<p>By {{~ name|capitalize }}</p>
+{% endmacro %}

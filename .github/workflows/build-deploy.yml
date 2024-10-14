@@ -1,0 +1,34 @@
+name: Build and Deploy on Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  discussion:
+    types: [created, edited, labeled, unlabeled]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run:  cargo run --release
+
+      - name: Purge Unused CSS
+        run: |
+          npm install -g purgecss
+          purgecss --content './**/*.html' --css 'output/assets/*.css' --output 'output/assets'
+
+      - name: Deploy
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ secrets.CLOUDFLARE_PAGES_PROJECT_NAME }}
+          directory: output

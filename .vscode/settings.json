@@ -1,0 +1,4 @@
+{
+    "livePreview.defaultPreviewPath": "/output/index.html",
+    "livePreview.serverRoot": "/output"
+}

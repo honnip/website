@@ -1,0 +1,207 @@
+/* reset */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+:lang(ko) {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+:lang(ko),
+:lang(ja),
+:lang(th),
+:lang(zh) {
+  font-style: normal;
+}
+
+/* color */
+
+@media screen {
+  :root {
+    --text: rgb(40, 40, 40);
+    --bg: rgb(249, 245, 215);
+    --link-text: hsl(220 100% 40%);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text: rgb(251, 241, 199);
+      --bg: #212121;
+      --link-text: hsl(215 100% 60%);
+    }
+  }
+
+  /* style */
+
+  .container {
+    max-width: 36rem;
+  }
+
+  html {
+    background-color: var(--bg);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    color: var(--text);
+    margin: 2rem 0;
+
+    >header {
+      font-size: 1.2rem;
+    }
+  }
+
+  header,
+  main,
+  footer {
+    margin: calc(30rem / 16) auto;
+  }
+
+  main header {
+    h1 {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  a {
+    color: var(--link-text);
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  nav {
+    a {
+      padding: 0 0 0 0.5rem;
+    }
+
+    a:first-child {
+      padding: 0;
+    }
+
+    a:last-child {
+      padding: 0 0.5rem;
+    }
+
+    a:not(:last-child)::after {
+      content: '/';
+      margin: 0 0 0 0.5rem;
+      color: hsl(223 100% 8% / 50%);
+    }
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    text-wrap: balance;
+    margin-top: 1rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+  }
+
+  h6 {
+    font-size: 1.1rem;
+  }
+
+  sub,
+  sup {
+    position: relative;
+    font-size: 0.75em;
+    line-height: 0;
+    vertical-align: baseline;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+}
+
+/* tag pill */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem 0.25rem;
+  border-radius: 0.5rem;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+@media print {
+
+  nav,
+  footer {
+    display: none;
+  }
+}

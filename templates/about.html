@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% import "components.html" as components %}
+
+{% block head %}
+<title>About {{~ owner.name|capitalize }}</title>
+<meta property="og:title" content="About {{~ owner.name|capitalize }}">
+<meta property="og:type" content="profile">
+<meta property="profile:first_name" content="Seungwoo">
+<meta property="profile:last_name" content="Jung">
+<meta property="profile:username" content="{{ owner.name|capitalize }}">
+{% endblock %}
+
+{% block header %}
+{% call components::header() %}
+{% endblock %}
+
+{% block content %}
+<h1>About</h1>
+<p>2024-10-11 Init</p>
+{% endblock %}
+
+{% block footer %}
+{% call components::footer(owner.name) %}
+{% endblock %}

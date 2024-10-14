@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% import "components.html" as components %}
+
+{% block head %}
+<title>{{ post.title ~}} - {{~ author.name|capitalize }}</title>
+<meta property="og:title" content="{{ post.title }}" />
+<meta property="od:url" content="https://honnip.page/posts/{{ post.slug }}" />
+<meta property="og:type" content="article" />
+<meta property="article:author" content="{{ author.name|capitalize }}" />
+<meta property="article:published_time" content="{{ post.published_at }}" />
+<meta property="article:modified_time" content="{{ post.updated_at }}" />
+{% for label in post.labels %}
+<meta property="article:tag" content="{{ label.name }}" />
+{% endfor %}
+{% endblock %}
+
+{% block header %}
+{% call components::header() %}
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1>{{ post.title }}</h1>
+    <time datetime="{{ post.published_at }}">{{ post.published_at }}</time> 게시 (<time
+        datetime="{{ post.updated_at }}">{{ post.updated_at }}</time> 수정)
+    <ul class="tags">
+        {% for label in post.labels %}
+        {% match label.description %}
+        {% when Some with (desc) %}
+        <li><a class="tag" style="background-color: #{{ label.color }}2E;" href="/tags/{{ label.name }}"
+                title="{{ desc }}">
+                {{ label.name }}</a></li>
+        {% when None %}
+        <li><a class="tag" style="background-color: #{{ label.color }}2E;" href="/tags/{{ label.name }}">{{ label.name
+                }}</a></li>
+        {% endmatch %}
+        {% endfor %}
+    </ul>
+</header>
+{{ post.body }}
+{% endblock %}
+
+{% block footer %}
+{% call components::footer(owner.name) %}
+{% endblock %}
