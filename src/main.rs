@@ -135,13 +135,16 @@ async fn fetch_posts(owner: &str, repo: &str) -> anyhow::Result<Vec<Post>> {
                 });
             }
 
-            let title = node["title"].as_str().unwrap().to_string();
-            let (title, slug) = title
-                .split_once("#")
-                .expect("Discussion title should contain a slug. Format: My title#slug");
+            let t = node["title"].as_str().unwrap().to_string();
+            let mut parts = t.splitn(3, '#');
+            let msg = "Expected discussion format: Title#Description#Slug";
+            let title = parts.next().expect(msg);
+            let description = parts.next().expect(msg);
+            let slug = parts.next().expect(msg);
 
             articles.push(Post {
                 title: title.to_string(),
+                description: description.to_string(),
                 slug: slug.to_string(),
                 body: node["bodyHTML"].as_str().unwrap().to_string(),
                 author: Author {
@@ -254,6 +257,7 @@ struct PostTemplate<'a> {
 
 struct Post {
     title: String,
+    description: String,
     slug: String,
     body: String,
     author: Author,
