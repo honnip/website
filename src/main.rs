@@ -10,6 +10,15 @@ async fn main() -> anyhow::Result<()> {
     let dist = "output";
     let asset = "assets";
 
+    let owner = Author {
+        name: owner.to_string(),
+        avatar: format!(
+            "https://avatars.githubusercontent.com/u/{}?v=4&s=100",
+            std::env::var("GITHUB_REPOSITORY_OWNER_ID")
+                .expect("GITHUB_REPOSITORY_OWNER_ID environment variable is required")
+        ),
+    };
+
     // output dir
     fs::remove_dir_all(dist).await.or_else(ignore_not_found)?;
     fs::create_dir(dist).await?;
@@ -33,51 +42,27 @@ async fn main() -> anyhow::Result<()> {
     }
 
     // fetch all posts
-    let posts = fetch_posts(owner, repo).await?;
+    let posts = fetch_posts(&owner.name, repo).await?;
 
     // create index page
     create_html(
         "output/index.html",
         IndexTemplate {
             posts: &posts,
-            owner: &Author {
-                name: owner.to_string(),
-                avatar: format!(
-                    "https://avatars.githubusercontent.com/u/{}?v=4&s=100",
-                    std::env::var("GITHUB_REPOSITORY_OWNER_ID")?
-                ),
-            },
+            owner: &owner,
         },
     )
     .await?;
 
     // create about page
-    create_html(
-        "output/about.html",
-        AboutTemplate {
-            owner: &Author {
-                name: owner.to_string(),
-                avatar: format!(
-                    "https://avatars.githubusercontent.com/u/{}?v=4&s=100",
-                    std::env::var("GITHUB_REPOSITORY_OWNER_ID")?
-                ),
-            },
-        },
-    )
-    .await?;
+    create_html("output/about.html", AboutTemplate { owner: &owner }).await?;
 
     // create posts page
     create_html(
         "output/posts.html",
         PostsTemplate {
             posts: &posts,
-            owner: &Author {
-                name: "Honnip".to_string(),
-                avatar: format!(
-                    "https://avatars.githubusercontent.com/u/{}?v=4&s=100",
-                    std::env::var("GITHUB_REPOSITORY_OWNER_ID")?
-                ),
-            },
+            owner: &owner,
         },
     )
     .await?;
@@ -94,13 +79,7 @@ async fn main() -> anyhow::Result<()> {
             PostTemplate {
                 post: &post,
                 author: &post.author,
-                owner: &Author {
-                    name: owner.to_string(),
-                    avatar: format!(
-                        "https://avatars.githubusercontent.com/u/{}?v=4&s=100",
-                        std::env::var("GITHUB_REPOSITORY_OWNER_ID")?
-                    ),
-                },
+                owner: &owner,
             },
         )
         .await?;
