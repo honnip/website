@@ -6,7 +6,12 @@ use walkdir::WalkDir;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let (owner, repo) = ("honnip", "website");
+    let repository = std::env::var("GITHUB_REPOSITORY")
+        .expect("GITHUB_REPOSITORY environment variable is required");
+    let (owner, repo) = repository
+        .split_once('/')
+        .expect("GITHUB_REPOSITORY should be in the format owner/repo");
+
     let dist = "output";
     let asset = "assets";
 
