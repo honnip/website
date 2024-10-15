@@ -42,7 +42,11 @@ async fn main() -> anyhow::Result<()> {
     }
 
     // fetch all posts
-    let posts = fetch_posts(&owner.name, repo).await?;
+    let posts = fetch_posts(&owner.name, repo)
+        .await?
+        .into_iter()
+        .filter(|p| p.status == PostStatus::Published)
+        .collect();
 
     // create index page
     create_html(
@@ -69,10 +73,6 @@ async fn main() -> anyhow::Result<()> {
 
     // create post page
     for post in posts {
-        if post.status == PostStatus::Draft {
-            continue;
-        }
-
         let path = format!("output/posts/{}.html", post.slug);
         create_html(
             path,
