@@ -1,0 +1,19 @@
+<xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Honnip.page Posts</title>
+    <link>https://honnip.page</link>
+    <description>Honnip.page에 최근 올라온 글</description>
+    <language>ko-kr</language>
+    <webMaster>me@honnip.page</webMaster>
+    <docs>https://www.rssboard.org/rss-specification</docs>
+    {% for post in posts %}
+    <item>
+      <title>{{ post.title }}</title>
+      <link>https://honnip.page/posts/{{ post.slug }}</link>
+      <description>{{ post.description }}</description>
+      <guid>https://honnip.page/posts/{{ post.slug }}</guid>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

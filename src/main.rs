@@ -77,18 +77,21 @@ async fn main() -> anyhow::Result<()> {
     .await?;
 
     // create post page
-    for post in posts {
+    for post in &posts {
         let path = format!("output/posts/{}.html", post.slug);
         create_html(
             path,
             PostTemplate {
-                post: &post,
+                post,
                 author: &post.author,
                 owner: &owner,
             },
         )
         .await?;
     }
+
+    // create rss feed
+    create_html("output/rss.xml", RssTemplate { posts: &posts }).await?;
 
     Ok(())
 }
@@ -253,6 +256,12 @@ struct PostTemplate<'a> {
     post: &'a Post,
     author: &'a Author,
     owner: &'a Author,
+}
+
+#[derive(Template)]
+#[template(path = "rss.xml", whitespace = "suppress")]
+struct RssTemplate<'a> {
+    posts: &'a Vec<Post>,
 }
 
 struct Post {
