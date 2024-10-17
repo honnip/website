@@ -174,7 +174,6 @@ async fn fetch_posts(owner: &str, repo: &str) -> anyhow::Result<Vec<Post>> {
                     .unwrap()
                     .to_string(),
                 labels: labels_vec,
-                number: node["number"].as_i64().unwrap() as i32,
             });
         }
         if !has_next_page {
@@ -201,6 +200,7 @@ fn generate_query(owner: &str, repo: &str, cursor: Option<&str>) -> String {
                             title
                             createdAt
                             updatedAt
+                            databaseId
                             bodyHTML
                             author {{
                                 login
@@ -216,7 +216,6 @@ fn generate_query(owner: &str, repo: &str, cursor: Option<&str>) -> String {
                                     }}
                                 }}
                             }}
-                            number
                         }}
                     }}
                     pageInfo {{
@@ -276,7 +275,6 @@ struct Post {
     /// yyyy-mm-dd
     updated_at: String,
     labels: Vec<Label>,
-    number: i32,
 }
 
 #[derive(PartialEq)]
